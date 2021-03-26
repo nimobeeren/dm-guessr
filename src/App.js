@@ -1,7 +1,10 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvent } from 'react-leaflet';
 import './App.css';
 
 function App() {
+  const [guess, setGuess] = useState();
+
   return (
     <div className="App">
       <div className="App-map">
@@ -10,11 +13,17 @@ function App() {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[51.505, -0.09]} />
+          <ClickHandler onClick={(e) => setGuess(e.latlng)} />
+          {guess == null ? null : <Marker position={guess} />}
         </MapContainer>
       </div>
     </div>
   );
+}
+
+function ClickHandler({ onClick }) {
+  useMapEvent('click', onClick);
+  return null;
 }
 
 export default App;
