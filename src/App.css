@@ -1,5 +1,7 @@
 .App {
   display: flex;
+  flex-flow: column nowrap;
+  gap: 32px;
   align-items: center;
   justify-content: center;
   background: darkslategray;
