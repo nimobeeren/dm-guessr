@@ -107,7 +107,7 @@ function Round({ answer, onComplete, onNext }) {
           </button>
         </>
       ) : (
-        <button type="submit" disabled={guess == null || submitted}>
+        <button type="submit" disabled={guess == null}>
           Guess
         </button>
       )}
