@@ -23,20 +23,10 @@ function App() {
     <div className="App">
       {answers ? (
         <>
-          <table>
-            <tbody>
-              <tr>
-                <td>Score:</td>
-                <td>{score}</td>
-              </tr>
-              <tr>
-                <td>Round:</td>
-                <td>
-                  {roundNum + 1} of {answers.length}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <header>
+            <div className="App-score">{score} points</div>
+            <div className="App-round">Round {roundNum+1} of {answers.length}</div>
+          </header>
           <Round
             key={roundNum}
             answer={answers[roundNum]}
@@ -72,17 +62,17 @@ function Round({ answer, onComplete, onNext }) {
 
   return (
     <form
-      className="App-round"
+      className="Round"
       action="#"
       onSubmit={() => {
         setSubmitted(true);
         onComplete(score);
       }}
     >
-      <div className="App-map">
+      <div className="Round-map">
         <MapContainer center={[30, 0]} zoom={1} minZoom={1}>
           <TileLayer
-            attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+            attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             url={
               'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
             }
