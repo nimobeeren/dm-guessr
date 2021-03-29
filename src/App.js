@@ -55,6 +55,13 @@ function Round({ answer, onComplete, onNext }) {
   const [distance, setDistance] = useState(null);
   const [score, setScore] = useState(0);
 
+  let distanceWithUnit;
+  if (distance > 1000) {
+    distanceWithUnit = Math.round(distance / 1000) + ' km';
+  } else {
+    distanceWithUnit = Math.round(distance) + ' m';
+  }
+
   useEffect(() => {
     const s = 5000.3 / 2 ** (distance / 10 ** 6);
     setScore(Math.floor(Math.min(s, 5000)));
@@ -99,7 +106,7 @@ function Round({ answer, onComplete, onNext }) {
       {submitted ? (
         <>
           <div className="App-result">
-            Nice try! Your guess was {Math.round(distance)} m off. You got{' '}
+            Nice try! Your guess was {distanceWithUnit} off. You got{' '}
             {score} points for that one.
           </div>
           <button type="button" onClick={onNext}>
