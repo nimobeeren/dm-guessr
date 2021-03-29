@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MapContainer,
   TileLayer,
@@ -24,16 +24,18 @@ function App() {
       {answers ? (
         <>
           <table>
-            <tr>
-              <td>Score:</td>
-              <td>{score}</td>
-            </tr>
-            <tr>
-              <td>Round:</td>
-              <td>
-                {roundNum + 1} of {answers.length}
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>Score:</td>
+                <td>{score}</td>
+              </tr>
+              <tr>
+                <td>Round:</td>
+                <td>
+                  {roundNum + 1} of {answers.length}
+                </td>
+              </tr>
+            </tbody>
           </table>
           <Round
             key={roundNum}
@@ -78,15 +80,17 @@ function Round({ answer, onComplete, onNext }) {
       }}
     >
       <div className="App-map">
-        <MapContainer
-          center={[30, 0]}
-          zoom={1}
-          minZoom={1}
-          attributionControl={false}
-        >
+        <MapContainer center={[30, 0]} zoom={1} minZoom={1}>
           <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>'
+            url={
+              'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}'
+            }
+            maxZoom={18}
+            id="mapbox/streets-v11"
+            tileSize={512}
+            zoomOffset={-1}
+            accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
           />
           <ClickHandler
             onClick={(e) => {
