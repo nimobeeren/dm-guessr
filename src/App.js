@@ -25,7 +25,9 @@ function App() {
         <>
           <header>
             <div className="App-score">{score} points</div>
-            <div className="App-round">Round {roundNum+1} of {answers.length}</div>
+            <div className="App-round">
+              Round {roundNum + 1} of {answers.length}
+            </div>
           </header>
           <Round
             key={roundNum}
@@ -77,7 +79,16 @@ function Round({ answer, onComplete, onNext }) {
       }}
     >
       <div className="Round-map">
-        <MapContainer center={[30, 0]} zoom={1} minZoom={1}>
+        <MapContainer
+          center={[30, 0]}
+          zoom={1}
+          minZoom={1}
+          maxBounds={[
+            [-90, Number.NEGATIVE_INFINITY],
+            [90, Number.POSITIVE_INFINITY],
+          ]}
+          worldCopyJump
+        >
           <TileLayer
             attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             url={
@@ -106,8 +117,8 @@ function Round({ answer, onComplete, onNext }) {
       {submitted ? (
         <>
           <div className="App-result">
-            Nice try! Your guess was {distanceWithUnit} off. You got{' '}
-            {score} points for that one.
+            Nice try! Your guess was {distanceWithUnit} off. You got {score}{' '}
+            points for that one.
           </div>
           <button type="button" onClick={onNext}>
             Next
