@@ -9,24 +9,55 @@ import {
 import './App.css';
 
 function App() {
-  const [answer, setAnswer] = useState(null);
+  const [answers, setAnswers] = useState(null);
   const [score, setScore] = useState(0);
+  const [roundNum, setRoundNum] = useState(0);
 
   useEffect(() => {
     fetch('/answers.json')
       .then((res) => res.json())
-      .then(setAnswer);
+      .then(setAnswers);
   }, []);
 
   return (
     <div className="App">
-      <div>Score: {score}</div>
-      <Round answer={answer} onComplete={setScore} />
+      {answers ? (
+        <>
+          <table>
+            <tr>
+              <td>Score:</td>
+              <td>{score}</td>
+            </tr>
+            <tr>
+              <td>Round:</td>
+              <td>
+                {roundNum + 1} of {answers.length}
+              </td>
+            </tr>
+          </table>
+          <Round
+            key={roundNum}
+            answer={answers[roundNum]}
+            onComplete={(roundScore) => {
+              setScore((prev) => prev + roundScore);
+            }}
+            onNext={() => {
+              if (roundNum < answers.length - 1) {
+                setRoundNum((prev) => prev + 1);
+              } else {
+                alert('This is the eeeeeend');
+              }
+            }}
+          />
+        </>
+      ) : (
+        <span>Loading...</span>
+      )}
     </div>
   );
 }
 
-function Round({ answer, onComplete }) {
+function Round({ answer, onComplete, onNext }) {
   const [guess, setGuess] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState(null);
@@ -71,14 +102,20 @@ function Round({ answer, onComplete }) {
           {submitted ? <Marker position={answer} /> : null}
         </MapContainer>
       </div>
-      <button type="submit" disabled={guess == null || submitted}>
-        Guess
-      </button>
-      {!submitted ? null : (
-        <div className="App-result">
-          Nice try! Your guess was {Math.round(distance)} m off. You got {score}{' '}
-          points for that one.
-        </div>
+      {submitted ? (
+        <>
+          <div className="App-result">
+            Nice try! Your guess was {Math.round(distance)} m off. You got{' '}
+            {score} points for that one.
+          </div>
+          <button type="button" onClick={onNext}>
+            Next
+          </button>
+        </>
+      ) : (
+        <button type="submit" disabled={guess == null || submitted}>
+          Guess
+        </button>
       )}
     </form>
   );
