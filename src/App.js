@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvent, useMap } from 'react-leaflet';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMapEvent,
+  useMap,
+} from 'react-leaflet';
 import './App.css';
 
 function App() {
-  const [guess, setGuess] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [distance, setDistance] = useState(null);
   const [answer, setAnswer] = useState(null);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     fetch('/answers.json')
@@ -16,6 +20,32 @@ function App() {
 
   return (
     <div className="App">
+      <div>Score: {score}</div>
+      <Round answer={answer} onComplete={setScore} />
+    </div>
+  );
+}
+
+function Round({ answer, onComplete }) {
+  const [guess, setGuess] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [distance, setDistance] = useState(null);
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    const s = 5000.3 / 2 ** (distance / 10 ** 6);
+    setScore(Math.floor(Math.min(s, 5000)));
+  }, [distance, setScore]);
+
+  return (
+    <form
+      className="App-round"
+      action="#"
+      onSubmit={() => {
+        setSubmitted(true);
+        onComplete(score);
+      }}
+    >
       <div className="App-map">
         <MapContainer
           center={[30, 0]}
@@ -32,26 +62,25 @@ function App() {
               if (!submitted) setGuess(e.latlng);
             }}
           />
-          <DistanceMeasurer guess={guess} answer={answer} onChange={setDistance} />
+          <DistanceMeasurer
+            guess={guess}
+            answer={answer}
+            onChange={setDistance}
+          />
           {guess ? <Marker position={guess} /> : null}
           {submitted ? <Marker position={answer} /> : null}
         </MapContainer>
       </div>
-      <button
-        type="submit"
-        disabled={guess == null || submitted}
-        onClick={() => {
-          setSubmitted(true);
-        }}
-      >
+      <button type="submit" disabled={guess == null || submitted}>
         Guess
       </button>
       {!submitted ? null : (
         <div className="App-result">
-          Nice try! Your guess was {Math.round(distance)} m off.
+          Nice try! Your guess was {Math.round(distance)} m off. You got {score}{' '}
+          points for that one.
         </div>
       )}
-    </div>
+    </form>
   );
 }
 
@@ -68,8 +97,8 @@ function DistanceMeasurer({ guess, answer, onChange }) {
       const dist = map.distance(guess, answer);
       onChange(dist);
     }
-  }, [guess, answer, map, onChange])
-  
+  }, [guess, answer, map, onChange]);
+
   return null;
 }
 

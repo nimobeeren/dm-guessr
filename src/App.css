@@ -1,18 +1,27 @@
 .App {
   display: flex;
   flex-flow: column nowrap;
-  gap: 32px;
   align-items: center;
   justify-content: center;
-  background: darkslategray;
+  gap: 32px;
   width: 100vw;
   height: 100vh;
+  background: darkslategray;
+  color: white;
+}
+
+.App-round {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .App-map {
   height: 400px;
   width: 100%;
-  max-width: 600px;
 }
 
 .leaflet-container {
