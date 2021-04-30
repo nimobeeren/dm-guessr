@@ -9,35 +9,35 @@ import {
 import './App.css';
 
 function App() {
-  const [answers, setAnswers] = useState(null);
+  const [photos, setPhotos] = useState(null);
   const [score, setScore] = useState(0);
-  const [roundNum, setRoundNum] = useState(0);
+  const [currentRoundNum, setCurrentRoundNum] = useState(0);
 
   useEffect(() => {
-    fetch('/answers.json')
+    fetch('/photos.json')
       .then((res) => res.json())
-      .then(setAnswers);
+      .then(setPhotos);
   }, []);
 
   return (
     <div className="App">
-      {answers ? (
+      {photos ? (
         <>
           <header>
             <div className="App-score">{score} points</div>
             <div className="App-round">
-              Round {roundNum + 1} of {answers.length}
+              Round {currentRoundNum + 1} of {photos.length}
             </div>
           </header>
           <Round
-            key={roundNum}
-            answer={answers[roundNum]}
+            key={currentRoundNum}
+            photo={photos[currentRoundNum]}
             onComplete={(roundScore) => {
               setScore((prev) => prev + roundScore);
             }}
             onNext={() => {
-              if (roundNum < answers.length - 1) {
-                setRoundNum((prev) => prev + 1);
+              if (currentRoundNum < photos.length - 1) {
+                setCurrentRoundNum((prev) => prev + 1);
               } else {
                 alert('This is the eeeeeend');
               }
@@ -51,11 +51,13 @@ function App() {
   );
 }
 
-function Round({ answer, onComplete, onNext }) {
+function Round({ photo, onComplete, onNext }) {
   const [guess, setGuess] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState(null);
   const [score, setScore] = useState(0);
+
+  const answer = [photo.lat, photo.lon];
 
   let distanceWithUnit;
   if (distance > 1000) {
@@ -111,6 +113,7 @@ function Round({ answer, onComplete, onNext }) {
             onChange={setDistance}
           />
           {guess ? <Marker position={guess} /> : null}
+          {/* @ts-ignore */}
           {submitted ? <Marker position={answer} /> : null}
         </MapContainer>
       </div>
