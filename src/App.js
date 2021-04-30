@@ -74,8 +74,8 @@ function Round({ photo, onComplete, onNext }) {
   return (
     <form
       className="Round"
-      action="#"
-      onSubmit={() => {
+      onSubmit={(e) => {
+        e.preventDefault();
         setSubmitted(true);
         onComplete(score);
       }}
