@@ -8,55 +8,15 @@ function App() {
   const [score, setScore] = useState(0);
   const [currentRoundNum, setCurrentRoundNum] = useState(0);
   const currentPhoto = photos?.[currentRoundNum];
-  const answer = currentPhoto ? [currentPhoto.lat, currentPhoto.lon] : undefined;
+  const answer = currentPhoto
+    ? [currentPhoto.lat, currentPhoto.lon]
+    : undefined;
 
   useEffect(() => {
     fetch('/photos.json')
       .then((res) => res.json())
       .then(setPhotos);
   }, []);
-
-  return (
-    <div className="App">
-      {photos ? (
-        <>
-          <div className="App-status">
-            <div className="App-score">{score} points</div>
-            <div className="App-round">
-              Round {currentRoundNum + 1} of {photos.length}
-            </div>
-          </div>
-          <Round filename={currentPhoto.filename} />
-          <MapPicker
-            key={currentRoundNum}
-            answer={answer}
-            onSubmit={(distance) => {
-              const s = 5000.3 / 2 ** (distance / 10 ** 6); // magic score formula
-              const roundScore = Math.floor(Math.min(s, 5000));
-              setScore((prev) => prev + roundScore);
-            }}
-            onNext={() => {
-              if (currentRoundNum < photos.length - 1) {
-                setCurrentRoundNum((prev) => prev + 1);
-              } else {
-                alert('This is the eeeeeend');
-              }
-            }}
-          />
-        </>
-      ) : (
-        <span>Loading...</span>
-      )}
-    </div>
-  );
-}
-
-function Round({ filename }) {
-  // const [guess, setGuess] = useState(null);
-  // const [submitted, setSubmitted] = useState(false);
-  // const [score, setScore] = useState(0);
-
-  // const answer = [photo.lat, photo.lon];
 
   // let distanceWithUnit;
   // if (distance > 1000) {
@@ -65,12 +25,49 @@ function Round({ filename }) {
   //   distanceWithUnit = Math.round(distance) + ' m';
   // }
 
-  // useEffect(() => {
-  //   const s = 5000.3 / 2 ** (distance / 10 ** 6);
-  //   setScore(Math.floor(Math.min(s, 5000)));
-  // }, [distance, setScore]);
+  return (
+    <div className="App">
+      {photos ? (
+        <>
+          <Photo filename={currentPhoto.filename} />
+          <div className="App-side">
+            <div className="App-status">
+              <div className="App-score">{score} points</div>
+              <div className="App-round">
+                Round {currentRoundNum + 1} of {photos.length}
+              </div>
+            </div>
+            <MapPicker
+              key={currentRoundNum}
+              answer={answer}
+              onSubmit={(distance) => {
+                const s = 5000.3 / 2 ** (distance / 10 ** 6); // magic score formula
+                const roundScore = Math.floor(Math.min(s, 5000));
+                setScore((prev) => prev + roundScore);
+              }}
+              onNext={() => {
+                if (currentRoundNum < photos.length - 1) {
+                  setCurrentRoundNum((prev) => prev + 1);
+                } else {
+                  alert('This is the eeeeeend');
+                }
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <span>Loading...</span>
+      )}
+    </div>
+  );
+}
 
-  return <img className="Round-photo" src={'photos/' + filename} />;
+function Photo({ filename }) {
+  return (
+    <div className="Photo">
+      <img alt="A mystery" src={'photos/' + filename} />
+    </div>
+  );
 }
 
 function MapPicker({ answer, onSubmit, onNext }) {
@@ -80,14 +77,14 @@ function MapPicker({ answer, onSubmit, onNext }) {
 
   return (
     <form
-      className="Round"
+      className="MapPicker"
       onSubmit={(e) => {
         e.preventDefault();
         setSubmitted(true);
         onSubmit(distance);
       }}
     >
-      <div className="Round-map">
+      <div className="MapPicker-map">
         <Map>
           <ClickHandler
             onClick={(e) => {
