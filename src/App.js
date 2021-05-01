@@ -11,12 +11,6 @@ import {
 
 function App() {
   const [photos, setPhotos] = useState(null);
-  const [score, setScore] = useState(0);
-  const [currentRoundNum, setCurrentRoundNum] = useState(0);
-  const currentPhoto = photos?.[currentRoundNum];
-  const answer = currentPhoto
-    ? [currentPhoto.lat, currentPhoto.lon]
-    : undefined;
 
   useEffect(() => {
     fetch('/photos.json')
@@ -26,35 +20,44 @@ function App() {
 
   return (
     <div className="App">
-      {photos ? (
-        <>
-          <Photo filename={currentPhoto.filename} />
-          <div className="App-side">
-            <div className="App-status">
-              <div className="App-score">{score} points</div>
-              <div className="App-round">
-                Round {currentRoundNum + 1} of {photos.length}
-              </div>
-            </div>
-            <MapPicker
-              key={currentRoundNum}
-              answer={answer}
-              onSubmit={(score) => {
-                setScore((prev) => prev + score);
-              }}
-              onNext={() => {
-                if (currentRoundNum < photos.length - 1) {
-                  setCurrentRoundNum((prev) => prev + 1);
-                } else {
-                  alert('This is the eeeeeend');
-                }
-              }}
-            />
+      {photos ? <Game photos={photos} /> : <span>Loading...</span>}
+    </div>
+  );
+}
+
+function Game({ photos }) {
+  const [score, setScore] = useState(0);
+  const [currentRoundNum, setCurrentRoundNum] = useState(0);
+  const currentPhoto = photos?.[currentRoundNum];
+  const answer = currentPhoto
+    ? [currentPhoto.lat, currentPhoto.lon]
+    : undefined;
+
+  return (
+    <div className="Game">
+      <Photo filename={currentPhoto.filename} />
+      <div className="App-side">
+        <div className="App-status">
+          <div className="App-score">{score} points</div>
+          <div className="App-round">
+            Round {currentRoundNum + 1} of {photos.length}
           </div>
-        </>
-      ) : (
-        <span>Loading...</span>
-      )}
+        </div>
+        <MapPicker
+          key={currentRoundNum}
+          answer={answer}
+          onSubmit={(score) => {
+            setScore((prev) => prev + score);
+          }}
+          onNext={() => {
+            if (currentRoundNum < photos.length - 1) {
+              setCurrentRoundNum((prev) => prev + 1);
+            } else {
+              alert('This is the eeeeeend');
+            }
+          }}
+        />
+      </div>
     </div>
   );
 }

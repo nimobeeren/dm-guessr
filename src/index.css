@@ -49,7 +49,7 @@ button:disabled {
   opacity: 0.3;
 }
 
-.App {
+.Game {
   display: flex;
   align-items: center;
   justify-content: center;
