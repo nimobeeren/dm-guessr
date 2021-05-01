@@ -46,7 +46,7 @@ export function GuessMarker(props) {
 }
 
 const answerIcon = L.icon({
-  iconUrl: 'images/answer.svg',
+  iconUrl: 'images/camera.svg',
   iconSize: [24, 24],
   iconAnchor: [12, 12],
 });

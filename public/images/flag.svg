@@ -1,6 +1,8 @@
 <svg width="11.516mm" height="11.41mm" version="1.1" viewBox="0 0 11.516 11.41" xmlns="http://www.w3.org/2000/svg">
- <g transform="translate(-110.66 -183.28)">
-  <ellipse cx="116.42" cy="188.99" rx="5.4932" ry="5.4399" fill="#c4d3ff" stroke="#21232c" stroke-width=".53"/>
-  <path d="m117.03 187.4-0.79375-0.52917h-1.4031v-0.52916h-0.52917v5.2917h0.52917v-2.1167h1.2427l0.79375 0.52917h1.6677v-2.6458z" fill="#21232c" stroke-width=".26458"/>
+ <g transform="translate(-32.028 -40.463)">
+  <g transform="translate(-8.2358 35.516)">
+   <ellipse cx="46.022" cy="10.652" rx="5.4932" ry="5.4399" fill="#ffc4e0" stroke="#2a212c" stroke-width=".53"/>
+   <path d="m46.631 9.0642-0.79375-0.52917h-1.4031v-0.52917h-0.52917v5.2917h0.52917v-2.1167h1.2427l0.79375 0.52917h1.6677v-2.6458z" fill="#2a212c" stroke-width=".26458"/>
+  </g>
  </g>
 </svg>

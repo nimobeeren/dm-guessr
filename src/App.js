@@ -101,7 +101,6 @@ function MapPicker({ answer, onSubmit, onNext }) {
             onChange={setDistance}
           />
           {guess ? <GuessMarker position={guess} /> : null}
-          {/* @ts-ignore */}
           {submitted ? <AnswerMarker position={answer} /> : null}
         </Map>
       </div>
