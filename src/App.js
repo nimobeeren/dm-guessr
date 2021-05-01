@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Marker } from 'react-leaflet';
-import { ClickHandler, DistanceMeasurer, Map } from './components/Map';
+import {
+  AnswerMarker,
+  ClickHandler,
+  DistanceMeasurer,
+  GuessMarker,
+  Map,
+} from './components/Map';
 
 function App() {
   const [photos, setPhotos] = useState(null);
@@ -95,9 +100,9 @@ function MapPicker({ answer, onSubmit, onNext }) {
             answer={answer}
             onChange={setDistance}
           />
-          {guess ? <Marker position={guess} /> : null}
+          {guess ? <GuessMarker position={guess} /> : null}
           {/* @ts-ignore */}
-          {submitted ? <Marker position={answer} /> : null}
+          {submitted ? <AnswerMarker position={answer} /> : null}
         </Map>
       </div>
       {submitted ? (

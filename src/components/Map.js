@@ -1,5 +1,12 @@
+import L from 'leaflet';
 import React, { useEffect } from 'react';
-import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import {
+  MapContainer,
+  Marker,
+  TileLayer,
+  useMap,
+  useMapEvent,
+} from 'react-leaflet';
 
 export function Map({ children }) {
   return (
@@ -27,6 +34,24 @@ export function Map({ children }) {
       {children}
     </MapContainer>
   );
+}
+
+const guessIcon = L.icon({
+  iconUrl: 'images/flag.svg',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
+export function GuessMarker(props) {
+  return <Marker icon={guessIcon} {...props} />;
+}
+
+const answerIcon = L.icon({
+  iconUrl: 'images/answer.svg',
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
+export function AnswerMarker(props) {
+  return <Marker icon={answerIcon} {...props} />;
 }
 
 export function ClickHandler({ onClick }) {
