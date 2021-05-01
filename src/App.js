@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Marker } from 'react-leaflet';
-import './App.css';
 import { ClickHandler, DistanceMeasurer, Map } from './components/Map';
 
 function App() {

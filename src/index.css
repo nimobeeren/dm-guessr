@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #21232c;
+  color: white;
+  font-family: 'Work Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 code {
@@ -14,4 +17,78 @@ code {
 
 * {
   box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+  height: 100vh;
+  padding: 64px 96px;
+}
+
+.Photo {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  min-width: 300px;
+  background: #15161c;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.Photo img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.App-side {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.App-status {
+  text-align: center;
+  line-height: 1.5;
+}
+
+.App-score {
+  font-size: 24px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.MapPicker {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.MapPicker-map {
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.leaflet-grab {
+  cursor: pointer;
 }
