@@ -109,7 +109,11 @@ function MapPicker({ answer, onSubmit, onNext }) {
               <FitBounds bounds={[guess, answer]} />
               <Polyline
                 positions={[guess, answer]}
-                pathOptions={{ dashArray: '8 12', dashOffset: '8', color: '#2a212c' }}
+                pathOptions={{
+                  dashArray: '8 12',
+                  dashOffset: '8',
+                  color: '#2a212c',
+                }}
               />
             </>
           ) : null}
