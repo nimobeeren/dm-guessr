@@ -73,7 +73,7 @@ code {
 .MapPicker {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
   width: 100%;
 }
 
@@ -82,6 +82,10 @@ code {
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.MapPicker-message {
+  padding: 0 32px;
 }
 
 .leaflet-container {

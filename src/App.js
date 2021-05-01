@@ -24,13 +24,6 @@ function App() {
       .then(setPhotos);
   }, []);
 
-  // let distanceWithUnit;
-  // if (distance > 1000) {
-  //   distanceWithUnit = Math.round(distance / 1000) + ' km';
-  // } else {
-  //   distanceWithUnit = Math.round(distance) + ' m';
-  // }
-
   return (
     <div className="App">
       {photos ? (
@@ -46,10 +39,8 @@ function App() {
             <MapPicker
               key={currentRoundNum}
               answer={answer}
-              onSubmit={(distance) => {
-                const s = 5000.3 / 2 ** (distance / 10 ** 6); // magic score formula
-                const roundScore = Math.floor(Math.min(s, 5000));
-                setScore((prev) => prev + roundScore);
+              onSubmit={(score) => {
+                setScore((prev) => prev + score);
               }}
               onNext={() => {
                 if (currentRoundNum < photos.length - 1) {
@@ -81,13 +72,22 @@ function MapPicker({ answer, onSubmit, onNext }) {
   const [submitted, setSubmitted] = useState(false);
   const [distance, setDistance] = useState(null);
 
+  const score = Math.floor(Math.min(5000.3 / 2 ** (distance / 10 ** 6), 5000)); // magic score formula
+
+  let distanceWithUnit;
+  if (distance > 1000) {
+    distanceWithUnit = Math.round(distance / 1000) + ' km';
+  } else {
+    distanceWithUnit = Math.round(distance) + ' m';
+  }
+
   return (
     <form
       className="MapPicker"
       onSubmit={(e) => {
         e.preventDefault();
         setSubmitted(true);
-        onSubmit(distance);
+        onSubmit(score);
       }}
     >
       <div className="MapPicker-map">
@@ -109,23 +109,23 @@ function MapPicker({ answer, onSubmit, onNext }) {
               <FitBounds bounds={[guess, answer]} />
               <Polyline
                 positions={[guess, answer]}
-                pathOptions={{ dashArray: '8 12', color: '#2a212c' }}
+                pathOptions={{ dashArray: '8 12', dashOffset: '8', color: '#2a212c' }}
               />
             </>
           ) : null}
         </Map>
       </div>
       {submitted ? (
-        // <>
-        // <div className="App-result">
-        //   Nice try! Your guess was {distanceWithUnit} off. You got {score}{' '}
-        //   points for that one.
-        // </div>
-        <button type="button" onClick={onNext}>
-          Next
-        </button>
+        <>
+          <div className="MapPicker-message">
+            Nice try! Your guess was {distanceWithUnit} off. You got {score}{' '}
+            points for that one.
+          </div>
+          <button type="button" onClick={onNext}>
+            Next
+          </button>
+        </>
       ) : (
-        // </>
         <button type="submit" disabled={guess == null}>
           Guess
         </button>

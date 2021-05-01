@@ -79,7 +79,7 @@ export function FitBounds({ bounds }) {
     if (bounds) {
       const lBounds = L.latLngBounds(bounds);
       lBounds.pad(1.2);
-      map.flyToBounds(lBounds);
+      map.fitBounds(lBounds);
     }
   }, [bounds, map])
 
