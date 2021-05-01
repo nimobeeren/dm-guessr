@@ -3,6 +3,7 @@ import {
   AnswerMarker,
   ClickHandler,
   DistanceMeasurer,
+  FitBounds,
   GuessMarker,
   Map,
 } from './components/Map';
@@ -102,6 +103,7 @@ function MapPicker({ answer, onSubmit, onNext }) {
           />
           {guess ? <GuessMarker position={guess} /> : null}
           {submitted ? <AnswerMarker position={answer} /> : null}
+          {submitted ? <FitBounds bounds={[guess, answer]} /> : null}
         </Map>
       </div>
       {submitted ? (

@@ -71,3 +71,17 @@ export function DistanceMeasurer({ guess, answer, onChange }) {
 
   return null;
 }
+
+export function FitBounds({ bounds }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (bounds) {
+      const lBounds = L.latLngBounds(bounds);
+      lBounds.pad(1.2);
+      map.flyToBounds(lBounds);
+    }
+  }, [bounds, map])
+
+  return null;
+}
