@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Polyline } from 'react-leaflet';
 import {
   AnswerMarker,
   ClickHandler,
@@ -102,8 +103,16 @@ function MapPicker({ answer, onSubmit, onNext }) {
             onChange={setDistance}
           />
           {guess ? <GuessMarker position={guess} /> : null}
-          {submitted ? <AnswerMarker position={answer} /> : null}
-          {submitted ? <FitBounds bounds={[guess, answer]} /> : null}
+          {submitted ? (
+            <>
+              <AnswerMarker position={answer} />
+              <FitBounds bounds={[guess, answer]} />
+              <Polyline
+                positions={[guess, answer]}
+                pathOptions={{ dashArray: '8 12', color: '#2a212c' }}
+              />
+            </>
+          ) : null}
         </Map>
       </div>
       {submitted ? (
