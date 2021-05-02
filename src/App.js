@@ -36,10 +36,10 @@ function Game({ photos }) {
   return (
     <div className="Game">
       <Photo filename={currentPhoto.filename} />
-      <div className="App-side">
-        <div className="App-status">
-          <div className="App-score">{score} points</div>
-          <div className="App-round">
+      <div className="Game-side">
+        <div className="Game-status">
+          <div className="Game-score">{score} points</div>
+          <div className="Game-round">
             Round {currentRoundNum + 1} of {photos.length}
           </div>
         </div>

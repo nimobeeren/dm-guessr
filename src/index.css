@@ -79,7 +79,7 @@ button:disabled {
   object-fit: contain;
 }
 
-.App-side {
+.Game-side {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -89,12 +89,12 @@ button:disabled {
   max-width: 500px;
 }
 
-.App-status {
+.Game-status {
   text-align: center;
   line-height: 1.5;
 }
 
-.App-score {
+.Game-score {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 0.05em;
