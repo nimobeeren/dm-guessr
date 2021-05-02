@@ -1,5 +1,22 @@
 [
-  {"filename": "landscape.jpg", "lat": 51.85652987012803, "lon": 5.840137636267558},
-  {"filename": "portrait.jpg", "lat": 51.84111072247037, "lon": 5.862021778986569},
-  {"filename": "square.jpg", "lat": 51.44894838050448, "lon": 5.487601823320038}
+  {
+    "filename": "landscape.jpg",
+    "lat": 51.85652987012803,
+    "lon": 5.840137636267558
+  },
+  {
+    "filename": "portrait.jpg",
+    "lat": 51.84111072247037,
+    "lon": 5.862021778986569
+  },
+  {
+    "filename": "bridge.jpg",
+    "lat": 51.85652987012803,
+    "lon": 5.840137636267558
+  },
+  {
+    "filename": "square.jpg",
+    "lat": 51.44894838050448,
+    "lon": 5.487601823320038
+  }
 ]

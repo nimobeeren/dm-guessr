@@ -79,6 +79,10 @@ button:disabled {
   object-fit: contain;
 }
 
+.preload {
+  display: none !important;
+}
+
 .Game-side {
   flex-grow: 1;
   display: flex;

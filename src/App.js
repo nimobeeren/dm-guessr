@@ -35,7 +35,10 @@ function Game({ photos }) {
 
   return (
     <div className="Game">
-      <Photo filename={currentPhoto.filename} />
+      <Photo
+        filename={currentPhoto.filename}
+        nextFilename={photos?.[currentRoundNum + 1]?.filename}
+      />
       <div className="Game-side">
         <div className="Game-status">
           <div className="Game-score">{score} points</div>
@@ -62,10 +65,20 @@ function Game({ photos }) {
   );
 }
 
-function Photo({ filename }) {
+// TODO: the first two photos are loaded at the same time, preload first while
+// on landing page?
+function Photo({ filename, nextFilename = undefined }) {
   return (
     <div className="Photo">
-      <img alt="A mystery" src={'photos/' + filename} />
+      <img key={filename} src={'photos/' + filename} alt="A mystery" />
+      {nextFilename ? (
+        <img
+          key={nextFilename}
+          className="preload"
+          src={'photos/' + nextFilename}
+          alt="A mystery"
+        />
+      ) : null}
     </div>
   );
 }
