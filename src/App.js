@@ -37,7 +37,7 @@ function Game({ photos }) {
     <div className="Game">
       <Photo
         filename={currentPhoto.filename}
-        nextFilename={photos?.[currentRoundNum + 1]?.filename}
+        preloadFilename={photos?.[currentRoundNum + 1]?.filename}
       />
       <div className="Game-side">
         <div className="Game-status">
@@ -65,17 +65,28 @@ function Game({ photos }) {
   );
 }
 
-// TODO: the first two photos are loaded at the same time, preload first while
-// on landing page?
-function Photo({ filename, nextFilename = undefined }) {
+// FIXME: sometimes preloading starts while main image is still loading,
+// because `mainLoading` is never set to true again
+function Photo({ filename, preloadFilename = undefined }) {
+  const [mainLoading, setMainLoading] = useState(true);
+
+  // The key props are useful because React will swap the old image out and
+  // replace it with the preloaded one, without making another request
   return (
     <div className="Photo">
-      <img key={filename} src={'photos/' + filename} alt="A mystery" />
-      {nextFilename ? (
+      <img
+        key={filename}
+        src={'photos/' + filename}
+        alt="A mystery"
+        onLoad={() => {
+          setMainLoading(false);
+        }}
+      />
+      {preloadFilename && !mainLoading ? (
         <img
-          key={nextFilename}
+          key={preloadFilename}
           className="preload"
-          src={'photos/' + nextFilename}
+          src={'photos/' + preloadFilename}
           alt="A mystery"
         />
       ) : null}
