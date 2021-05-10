@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Polyline } from 'react-leaflet';
+import seedrandom from 'seedrandom';
 import {
   AnswerMarker,
   ClickHandler,
@@ -15,7 +16,11 @@ function App() {
   useEffect(() => {
     fetch('/photos.json')
       .then((res) => res.json())
-      .then(setPhotos);
+      .then(photos => {
+        const rng = seedrandom('doesntmatter');
+        photos.sort(() => rng() > 0.5 ? -1 : 1);
+        setPhotos(photos);
+      });
   }, []);
 
   return (
